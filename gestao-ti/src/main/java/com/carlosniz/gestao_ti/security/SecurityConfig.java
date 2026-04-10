@@ -5,12 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;@Configuration
+import org.springframework.security.web.SecurityFilterChain;
 
+@Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     public SecurityConfig(UserDetailsServiceImpl userDetailsService) {}
@@ -22,6 +25,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/equipments/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/licenses/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
                 );
 

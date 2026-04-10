@@ -64,4 +64,16 @@ public class UserService {
                 .createdAt(user.getCreatedAt())
                 .build();
     }
+
+    public UserResponseDTO promoteToAdmin(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN")
+                .orElseThrow(() -> new RuntimeException("Role ADMIN não encontrada"));
+
+        user.setRole(adminRole);
+        userRepository.save(user);
+        return toResponse(user);
+    }
 }

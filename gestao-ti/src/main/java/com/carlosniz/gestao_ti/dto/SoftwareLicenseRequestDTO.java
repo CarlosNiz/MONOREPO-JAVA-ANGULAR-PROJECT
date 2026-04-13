@@ -1,5 +1,6 @@
 package com.carlosniz.gestao_ti.dto;
 
+import com.carlosniz.gestao_ti.entity.LicenseStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,5 +24,5 @@ public class SoftwareLicenseRequestDTO {
     private LocalDate expirationDate;
 
     @NotBlank(message = "Status é obrigatório")
-    private String status;
+    private LicenseStatus status;
 }

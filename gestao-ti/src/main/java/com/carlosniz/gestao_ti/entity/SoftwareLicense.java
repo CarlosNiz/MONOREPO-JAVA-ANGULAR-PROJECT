@@ -37,8 +37,9 @@ public class SoftwareLicense {
     @Column(nullable = false)
     private LocalDate expirationDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private LicenseStatus status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

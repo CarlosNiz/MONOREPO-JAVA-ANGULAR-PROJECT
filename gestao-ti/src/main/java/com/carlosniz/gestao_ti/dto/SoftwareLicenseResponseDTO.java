@@ -1,5 +1,6 @@
 package com.carlosniz.gestao_ti.dto;
 
+import com.carlosniz.gestao_ti.entity.LicenseStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,6 +18,6 @@ public class SoftwareLicenseResponseDTO {
     private Integer totalSeats;
     private Integer usedSeats;
     private LocalDate expirationDate;
-    private String status;
+    private LicenseStatus status;
     private LocalDateTime createdAt;
 }

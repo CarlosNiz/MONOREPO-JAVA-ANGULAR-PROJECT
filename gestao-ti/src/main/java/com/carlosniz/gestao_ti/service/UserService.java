@@ -2,6 +2,7 @@ package com.carlosniz.gestao_ti.service;
 
 import com.carlosniz.gestao_ti.dto.UserRequestDTO;
 import com.carlosniz.gestao_ti.dto.UserResponseDTO;
+import com.carlosniz.gestao_ti.dto.UserUpdateDTO;
 import com.carlosniz.gestao_ti.entity.Role;
 import com.carlosniz.gestao_ti.entity.User;
 import com.carlosniz.gestao_ti.repository.RoleRepository;
@@ -55,16 +56,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private UserResponseDTO toResponse(User user) {
-        return UserResponseDTO.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .roleName(user.getRole().getName())
-                .createdAt(user.getCreatedAt())
-                .build();
-    }
-
     public UserResponseDTO promoteToAdmin(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -75,5 +66,33 @@ public class UserService {
         user.setRole(adminRole);
         userRepository.save(user);
         return toResponse(user);
+    }
+
+    public UserResponseDTO update(UUID id, UserUpdateDTO dto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if(dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
+        }
+        if(dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
+        if(dto.getPassword() != null) {
+            user.setPassword(dto.getPassword());
+        }
+
+        userRepository.save(user);
+        return toResponse(user);
+    }
+
+    private UserResponseDTO toResponse(User user) {
+        return UserResponseDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .roleName(user.getRole().getName())
+                .createdAt(user.getCreatedAt())
+                .build();
     }
 }

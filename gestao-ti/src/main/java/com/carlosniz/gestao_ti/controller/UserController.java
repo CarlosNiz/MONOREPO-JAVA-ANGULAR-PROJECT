@@ -2,6 +2,7 @@ package com.carlosniz.gestao_ti.controller;
 
 import com.carlosniz.gestao_ti.dto.UserRequestDTO;
 import com.carlosniz.gestao_ti.dto.UserResponseDTO;
+import com.carlosniz.gestao_ti.dto.UserUpdateDTO;
 import com.carlosniz.gestao_ti.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDTO> promote(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.promoteToAdmin(id));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> update(@PathVariable UUID id, @RequestBody @Valid UserUpdateDTO dto) {
+        return ResponseEntity.ok(userService.update(id, dto));
     }
 }

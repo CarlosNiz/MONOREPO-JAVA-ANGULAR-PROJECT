@@ -3,10 +3,12 @@ package com.carlosniz.gestao_ti.exception;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import tools.jackson.databind.exc.InvalidFormatException;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -59,6 +61,17 @@ public class GlobalExceptionHandler {
                 ApiError.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .message("Erro interno no servidor")
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiError.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message("Valor inválido no corpo da requisição")
                         .timestamp(LocalDateTime.now())
                         .build()
         );

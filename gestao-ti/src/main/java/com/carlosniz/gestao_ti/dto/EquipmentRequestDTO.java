@@ -1,6 +1,8 @@
 package com.carlosniz.gestao_ti.dto;
 
+import com.carlosniz.gestao_ti.entity.EquipmentStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.UUID;
@@ -20,8 +22,8 @@ public class EquipmentRequestDTO {
     private String brand;
     private String model;
 
-    @NotBlank(message = "Status é obrigatório")
-    private String status;
+    @NotNull(message = "Status é obrigatório")
+    private EquipmentStatus status;
 
     private UUID assignedUserId;
 }

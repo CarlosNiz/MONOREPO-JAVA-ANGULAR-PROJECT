@@ -1,5 +1,6 @@
 package com.carlosniz.gestao_ti.dto;
 
+import com.carlosniz.gestao_ti.entity.EquipmentStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class EquipmentResponseDTO {
     private String serialNumber;
     private String brand;
     private String model;
-    private String status;
+    private EquipmentStatus status;
     private String assignedUsername;
     private LocalDateTime createdAt;
 }

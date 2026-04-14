@@ -34,8 +34,9 @@ public class Equipment {
 
     private String model;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private EquipmentStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -23,6 +23,6 @@ public class SoftwareLicenseRequestDTO {
     @NotNull(message = "Data de expiração é obrigatória")
     private LocalDate expirationDate;
 
-    @NotBlank(message = "Status é obrigatório")
+    @NotNull(message = "Status é obrigatório")
     private LicenseStatus status;
 }

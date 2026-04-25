@@ -8,6 +8,7 @@ import com.carlosniz.gestao_ti.entity.User;
 import com.carlosniz.gestao_ti.repository.RoleRepository;
 import com.carlosniz.gestao_ti.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -35,6 +37,7 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+        log.info("Usuário criado: {}", user.getUsername());
         return toResponse(user);
     }
 
@@ -51,9 +54,10 @@ public class UserService {
     }
 
     public void delete(UUID id) {
-        userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         userRepository.deleteById(id);
+        log.info("Usuário deletado, {}", user.getUsername());
     }
 
     public UserResponseDTO promoteToAdmin(UUID id) {
@@ -65,6 +69,7 @@ public class UserService {
 
         user.setRole(adminRole);
         userRepository.save(user);
+        log.info("Usuário promovido para ADMIN: {}", user.getUsername());
         return toResponse(user);
     }
 
@@ -83,6 +88,7 @@ public class UserService {
         }
 
         userRepository.save(user);
+        log.info("Usuário atualizado: {}", user.getUsername());
         return toResponse(user);
     }
 

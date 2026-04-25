@@ -5,12 +5,14 @@ import com.carlosniz.gestao_ti.dto.SoftwareLicenseResponseDTO;
 import com.carlosniz.gestao_ti.entity.SoftwareLicense;
 import com.carlosniz.gestao_ti.repository.SoftwareLicenseRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SoftwareLicenseService {
@@ -29,7 +31,7 @@ public class SoftwareLicenseService {
                 .build();
 
         softwareLicenseRepository.save(license);
-
+        log.info("Licença criada: {}", license.getSoftwareName());
         return toResponse(license);
     }
 
@@ -58,14 +60,16 @@ public class SoftwareLicenseService {
         license.setStatus(dto.getStatus());
 
         softwareLicenseRepository.save(license);
+        log.info("Licença Atualizada: {}", license.getSoftwareName());
         return toResponse(license);
     }
 
     public void delete(UUID id) {
-        softwareLicenseRepository.findById(id)
+        SoftwareLicense license = softwareLicenseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Licença não encontrada"));
 
         softwareLicenseRepository.deleteById(id);
+        log.info("Licença deletada: {}", license.getSoftwareName());
     }
 
     private SoftwareLicenseResponseDTO toResponse(SoftwareLicense license) {

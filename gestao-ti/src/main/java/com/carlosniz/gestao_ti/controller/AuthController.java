@@ -3,6 +3,7 @@ package com.carlosniz.gestao_ti.controller;
 import jakarta.servlet.http.*;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -47,6 +49,7 @@ public class AuthController {
         cookie.setMaxAge(30 * 60); // 30 minutos
         response.addCookie(cookie);
 
+        log.info("Login realizado: {}", credentials.get("username"));
         return ResponseEntity.ok(Map.of("message", "Login realizado com sucesso!"));
     }
 
@@ -63,6 +66,7 @@ public class AuthController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
 
+        log.info("Logout realizado");
         return ResponseEntity.ok(Map.of("message", "Logout realizado com sucesso!"));
     }
 }

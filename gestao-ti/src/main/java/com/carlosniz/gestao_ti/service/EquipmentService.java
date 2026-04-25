@@ -7,12 +7,14 @@ import com.carlosniz.gestao_ti.entity.User;
 import com.carlosniz.gestao_ti.repository.EquipmentRepository;
 import com.carlosniz.gestao_ti.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EquipmentService {
@@ -38,6 +40,7 @@ public class EquipmentService {
                 .build();
 
         equipmentRepository.save(equipment);
+        log.info("Equipamento criado: {}", equipment.getName());
         return toResponse(equipment);
     }
 
@@ -72,14 +75,16 @@ public class EquipmentService {
         equipment.setAssignedUser(assignedUser);
 
         equipmentRepository.save(equipment);
+        log.info("Equipamento atualizado: {}", equipment.getName());
         return toResponse(equipment);
     }
 
     public void delete(UUID id) {
-        equipmentRepository.findById(id)
+        Equipment equipment = equipmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
 
         equipmentRepository.deleteById(id);
+        log.info("Equipamento deletado: {}", equipment.getName());
     }
 
     private EquipmentResponseDTO toResponse(Equipment equipment) {

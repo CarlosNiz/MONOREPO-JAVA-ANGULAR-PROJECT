@@ -15,32 +15,22 @@ export class EquipmentService {
   constructor(private http: HttpClient) {}
 
   create(equipment: EquipmentRequest): Observable<Equipment> {
-    return this.http.post<Equipment>(this.apiUrl, equipment,
-      { withCredentials: true }
-    );
+    return this.http.post<Equipment>(this.apiUrl, equipment);
   }
 
   findAll(page = 0, size = 10): Observable<Page<Equipment>> {
-    return this.http.get<Page<Equipment>>(`${this.apiUrl}?page=${page}&size=${size}`,
-      { withCredentials: true }
-    );
+    return this.http.get<Page<Equipment>>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
   findById(id: string): Observable<Equipment> {
-    return this.http.get<Equipment>(`${this.apiUrl}/${id}`,
-      { withCredentials: true }
-    );
+    return this.http.get<Equipment>(`${this.apiUrl}/${id}`);
   }
 
   update(id: string, equipment: EquipmentRequest): Observable<Equipment> {
-    return this.http.put<Equipment>(`${this.apiUrl}/${id}`, equipment,
-      { withCredentials: true }
-    );
+    return this.http.put<Equipment>(`${this.apiUrl}/${id}`, equipment);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`,
-      { withCredentials: true }
-    );
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

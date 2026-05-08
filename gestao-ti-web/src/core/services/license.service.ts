@@ -15,32 +15,22 @@ private apiUrl = `${environment.apiUrl}/licenses`;
   constructor(private http: HttpClient) {}
 
   create(license: LicenseRequest): Observable<License> {
-    return this.http.post<License>(this.apiUrl, license,
-      { withCredentials: true }
-    );
+    return this.http.post<License>(this.apiUrl, license);
   }
 
   findAll(page = 0, size = 10): Observable<Page<License>> {
-    return this.http.get<Page<License>>(`${this.apiUrl}?page=${page}&size=${size}`,
-      { withCredentials: true }
-    );
+    return this.http.get<Page<License>>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
   findById(id: string): Observable<License> {
-    return this.http.get<License>(`${this.apiUrl}/${id}`,
-      { withCredentials: true }
-    );
+    return this.http.get<License>(`${this.apiUrl}/${id}`);
   }
 
   update(id: string, license: LicenseRequest): Observable<License> {
-    return this.http.put<License>(`${this.apiUrl}/${id}`, license,
-      { withCredentials: true }
-    );
+    return this.http.put<License>(`${this.apiUrl}/${id}`, license);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`,
-      { withCredentials: true }
-    );
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

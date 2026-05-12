@@ -1,13 +1,13 @@
-export type EquipamentStatus = 'ATIVO' | 'INATIVO' | 'EM_MANUTENCAO' | 'DESCARTADO';
+export type EquipmentStatus = 'ATIVO' | 'INATIVO' | 'EM_MANUTENCAO' | 'DESCARTADO';
 
 export interface Equipment {
-    id: number;
+    id: string;
     name: string;
     type: string;
     serialNumber: string;
     brand: string;
     model: string;
-    status: EquipamentStatus;
+    status: EquipmentStatus;
     assignedUsername: string;
     createdAt: string;
 }   
@@ -18,6 +18,6 @@ export interface EquipmentRequest {
     serialNumber: string;
     brand?: string;
     model?: string;
-    status: EquipamentStatus;
+    status: EquipmentStatus;
     assignedUsername?: string;
 }

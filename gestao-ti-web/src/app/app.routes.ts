@@ -26,6 +26,18 @@ export const routes: Routes = [
       .then(m => m.LicenseList)
   },
   {
+    path: 'equipments/new',
+    canActivate: [authGuard],
+    loadComponent: () => import('../features/equipments/equipment-form/equipment-form')
+      .then(m => m.EquipmentForm)
+  },
+  {
+    path: 'equipments/:id/edit',
+    canActivate: [authGuard],
+    loadComponent: () => import('../features/equipments/equipment-form/equipment-form')
+      .then(m => m.EquipmentForm)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

@@ -1,1 +1,69 @@
-<p>equipment-list works!</p>
+<div class="container">
+
+  <header class="header">
+    <h1>Equipamentos</h1>
+    <div class="actions">
+      <a routerLink="/equipments/new" class="btn-primary">+ Novo Equipamento</a>
+      <button class="btn-logout" (click)="logout()">Sair</button>
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="loading">Carregando...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && equipments.length > 0) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Nº de Série</th>
+            <th>Marca</th>
+            <th>Status</th>
+            <th>Usuário</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (equipment of equipments; track equipment.id) {
+            <tr>
+              <td>{{ equipment.name }}</td>
+              <td>{{ equipment.type }}</td>
+              <td>{{ equipment.serialNumber }}</td>
+              <td>{{ equipment.brand }}</td>
+              <td>
+                <span class="status" [class]="equipment.status.toLowerCase()">
+                  {{ equipment.status }}
+                </span>
+              </td>
+              <td>{{ equipment.assignedUsername || '-' }}</td>
+              <td>
+                <a [routerLink]="['/equipments', equipment.id, 'edit']" class="btn-edit">Editar</a>
+                <button class="btn-delete" (click)="deleteEquipment(equipment.id)">Excluir</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!loading && equipments.length === 0) {
+    <div class="empty">Nenhum equipamento cadastrado</div>
+  }
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 0">Anterior</button>
+      <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Próxima</button>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+  <header class="header">
+    <h1>{{ isEditMode ? 'Editar Equipamento' : 'Novo Equipamento' }}</h1>
+    <a routerLink="/equipments" class="btn-back">← Voltar</a>
+  </header>
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+
+    <div class="form-group">
+      <label for="name">Nome *</label>
+      <input id="name" type="text" formControlName="name" placeholder="Ex: Notebook Dell" />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Tipo *</label>
+      <input id="type" type="text" formControlName="type" placeholder="Ex: Notebook, Desktop, Impressora" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="serialNumber">Nº de Série *</label>
+        <input id="serialNumber" type="text" formControlName="serialNumber" />
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select id="status" formControlName="status">
+          @for (status of statusOptions; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="brand">Marca</label>
+        <input id="brand" type="text" formControlName="brand" />
+      </div>
+
+      <div class="form-group">
+        <label for="model">Modelo</label>
+        <input id="model" type="text" formControlName="model" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/equipments" class="btn-cancel">Cancelar</a>
+      <button type="submit" class="btn-primary" [disabled]="loading || form.invalid">
+        {{ loading ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

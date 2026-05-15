@@ -22,6 +22,10 @@ export class UserService {
         return this.http.get<Page<User>>(`${this.apiUrl}?page=${page}&size=${size}`);
     }
 
+    findAllSimple(): Observable<{ id: string, username: string }[]> {
+        return this.http.get<{ id: string, username: string }[]>(`${this.apiUrl}/list`);
+    }
+
     findById(id: number): Observable<User> {
         return this.http.get<User>(`${this.apiUrl}/${id}`);
     }

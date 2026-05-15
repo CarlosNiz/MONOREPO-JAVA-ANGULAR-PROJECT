@@ -12,7 +12,7 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
   private authenticated = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`,
@@ -21,6 +21,9 @@ export class AuthService {
       tap(() => {
         this.authenticated = true;
         localStorage.setItem('authenticated', 'true');
+        this.getCurrentUser().subscribe(user => {
+          localStorage.setItem('userRole', user.role);
+        });
       })
     );
   }
@@ -30,6 +33,7 @@ export class AuthService {
       tap(() => {
         this.authenticated = false;
         localStorage.removeItem('authenticated');
+        localStorage.removeItem('userRole');
         this.router.navigate(['/login']);
       })
     );
@@ -41,5 +45,13 @@ export class AuthService {
 
   checkSession(): Observable<any> {
     return this.http.get(`${this.apiUrl}/me`);
+  }
+
+  getCurrentUser(): Observable<{ username: string, role: string }> {
+    return this.http.get<{ username: string, role: string }>(`${this.apiUrl}/me`);
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem('userRole') === 'ROLE_ADMIN';
   }
 }

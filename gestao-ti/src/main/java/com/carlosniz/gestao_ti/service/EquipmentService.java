@@ -96,6 +96,9 @@ public class EquipmentService {
                 .brand(equipment.getBrand())
                 .model(equipment.getModel())
                 .status(equipment.getStatus())
+                .assignedUserId(equipment.getAssignedUser() != null
+                        ? equipment.getAssignedUser().getId()
+                        : null)
                 .assignedUsername(equipment.getAssignedUser() != null
                         ? equipment.getAssignedUser().getUsername()
                         : null)

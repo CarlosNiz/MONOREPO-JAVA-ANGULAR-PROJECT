@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EquipmentService } from '../../../core/services/equipment.service';
+import { UserService } from '../../../core/services/user.service';
 import { EquipmentStatus } from '../../../shared/models/equipment.model';
+import { User } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-equipment-form',
@@ -21,10 +23,12 @@ export class EquipmentForm implements OnInit {
   errorMessage = '';
 
   statusOptions: EquipmentStatus[] = ['ATIVO', 'INATIVO', 'EM_MANUTENCAO', 'DESCARTADO'];
+  users: User[] = [];
 
   constructor(
     private fb: FormBuilder,
     private equipmentService: EquipmentService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
@@ -41,11 +45,22 @@ export class EquipmentForm implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadUsers();
+
     this.equipmentId = this.route.snapshot.paramMap.get('id');
     if (this.equipmentId) {
       this.isEditMode = true;
       this.loadEquipment();
     }
+  }
+
+  loadUsers(): void {
+    this.userService.findAllSimple().subscribe({
+      next: (users) => {
+        this.users = users as any;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   loadEquipment(): void {
@@ -77,9 +92,7 @@ export class EquipmentForm implements OnInit {
       : this.equipmentService.create(this.form.value);
 
     request.subscribe({
-      next: () => {
-        this.router.navigate(['/equipments']);
-      },
+      next: () => this.router.navigate(['/equipments']),
       error: (err) => {
         this.errorMessage = err.message;
         this.loading = false;

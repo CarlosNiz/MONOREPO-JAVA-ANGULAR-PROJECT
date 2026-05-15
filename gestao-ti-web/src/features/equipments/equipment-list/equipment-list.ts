@@ -20,13 +20,15 @@ export class EquipmentList implements OnInit {
   errorMessage = '';
   currentPage = 0;
   totalPages = 0;
+  isAdmin = false;
 
   constructor(
     private equipmentService: EquipmentService,
     private authService: AuthService,
-    private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.isAdmin = this.authService.isAdmin();
+  }
 
   ngOnInit(): void {
     this.loadEquipments();

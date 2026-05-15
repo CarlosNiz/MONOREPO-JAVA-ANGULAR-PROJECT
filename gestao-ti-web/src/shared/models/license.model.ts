@@ -1,7 +1,7 @@
-export type LicenseStatus = 'ATIVO' | 'EXPIRANDO' | 'EXPIRADA';
+export type LicenseStatus = 'ATIVA' | 'EXPIRANDO' | 'EXPIRADA';
 
 export interface License {
-    id: number;
+    id: string;
     softwareName: string;
     licenseKey: string;
     vendor: string;

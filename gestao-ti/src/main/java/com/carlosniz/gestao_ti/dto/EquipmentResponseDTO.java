@@ -17,6 +17,7 @@ public class EquipmentResponseDTO {
     private String brand;
     private String model;
     private EquipmentStatus status;
+    private UUID assignedUserId;
     private String assignedUsername;
     private LocalDateTime createdAt;
 }

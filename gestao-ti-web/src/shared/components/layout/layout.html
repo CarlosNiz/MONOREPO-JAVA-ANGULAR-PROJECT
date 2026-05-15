@@ -1,0 +1,39 @@
+<div class="layout">
+
+  <div class="mobile-header">
+    <h2>Gestão TI</h2>
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+  </div>
+
+  <div class="overlay" [class.active]="menuOpen" (click)="closeMenu()"></div>
+
+  <aside class="sidebar" [class.open]="menuOpen">
+    <div class="logo">
+      <h2>Gestão TI</h2>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/equipments" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
+        <span class="icon">💻</span> Equipamentos
+      </a>
+
+      @if (isAdmin) {
+      <a routerLink="/licenses" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
+        <span class="icon">🔑</span> Licenças
+      </a>
+      <a routerLink="/users" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
+        <span class="icon">👥</span> Usuários
+      </a>
+      }
+    </nav>
+
+    <button class="btn-logout" (click)="logout()">
+      <span class="icon">🚪</span> Sair
+    </button>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+</div>

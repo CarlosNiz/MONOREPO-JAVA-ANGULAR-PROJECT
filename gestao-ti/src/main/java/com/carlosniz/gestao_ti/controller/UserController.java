@@ -2,6 +2,7 @@ package com.carlosniz.gestao_ti.controller;
 
 import com.carlosniz.gestao_ti.dto.UserRequestDTO;
 import com.carlosniz.gestao_ti.dto.UserResponseDTO;
+import com.carlosniz.gestao_ti.dto.UserSimpleDTO;
 import com.carlosniz.gestao_ti.dto.UserUpdateDTO;
 import com.carlosniz.gestao_ti.service.UserService;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,6 +27,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(dto));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<UserSimpleDTO>> findAllSimple() {
+        return ResponseEntity.ok(userService.findAllSimple());
     }
 
     @GetMapping

@@ -69,11 +69,17 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> me(HttpServletRequest request) {
+    public ResponseEntity<?> me(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        if (session == null || authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(Map.of("authenticated", true));
+
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+
+        return ResponseEntity.ok(Map.of(
+                "username", authentication.getName(),
+                "role", role
+        ));
     }
 }

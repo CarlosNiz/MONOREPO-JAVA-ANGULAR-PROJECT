@@ -1,0 +1,146 @@
+@use '../../../styles/tokens' as *;
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: $gray-50;
+
+  .mobile-header {
+    display: none;
+    background: white;
+    border-bottom: 1px solid $gray-200;
+    padding: $space-md $space-lg;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    @include mobile-and-tablet { display: flex; }
+
+    h2 {
+      color: $gray-900;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .menu-toggle {
+      background: transparent;
+      border: none;
+      color: $gray-700;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: $space-xs;
+      border-radius: $radius-sm;
+
+      &:hover { background: $gray-100; }
+    }
+  }
+
+  .sidebar {
+    width: 260px;
+    background: white;
+    border-right: 1px solid $gray-200;
+    display: flex;
+    flex-direction: column;
+    padding: $space-xl $space-md;
+    transition: transform 0.3s ease;
+
+    @include mobile-and-tablet {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 200;
+      transform: translateX(-100%);
+      box-shadow: $shadow-lg;
+
+      &.open { transform: translateX(0); }
+    }
+
+    .logo {
+      padding: 0 $space-md $space-xl;
+      margin-bottom: $space-md;
+      border-bottom: 1px solid $gray-200;
+
+      h2 {
+        color: $primary;
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+    }
+
+    .menu {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        padding: $space-sm $space-md;
+        color: $gray-600;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: $radius-sm;
+        transition: $transition;
+
+        .icon { font-size: 1.1rem; }
+
+        &:hover {
+          background: $gray-100;
+          color: $gray-900;
+        }
+
+        &.active {
+          background: $primary-light;
+          color: $primary;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: $space-sm;
+      padding: $space-sm $space-md;
+      background: transparent;
+      color: $gray-500;
+      border: none;
+      border-radius: $radius-sm;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: $transition;
+
+      &:hover {
+        background: $danger-light;
+        color: $danger;
+      }
+    }
+  }
+
+  .overlay {
+    display: none;
+
+    @include mobile-and-tablet {
+      &.active {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 39, 0.4);
+        z-index: 150;
+        backdrop-filter: blur(2px);
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}

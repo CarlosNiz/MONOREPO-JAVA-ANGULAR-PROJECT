@@ -49,6 +49,16 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="assignedUserId">Atribuir a Usuário</label>
+      <select id="assignedUserId" formControlName="assignedUserId">
+        <option [ngValue]="null">-- Sem usuário atribuído --</option>
+        @for (user of users; track user.id) {
+          <option [value]="user.id">{{ user.username }} ({{ user.email }})</option>
+        }
+      </select>
+    </div>
+
     <div class="form-actions">
       <a routerLink="/equipments" class="btn-cancel">Cancelar</a>
       <button type="submit" class="btn-primary" [disabled]="loading || form.invalid">

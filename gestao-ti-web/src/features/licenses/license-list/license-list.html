@@ -1,1 +1,66 @@
-<p>license-list works!</p>
+<div class="container">
+
+  <header class="header">
+    <h1>Licenças</h1>
+    <a routerLink="/licenses/new" class="btn-primary">+ Nova Licença</a>
+  </header>
+
+  @if (loading) {
+    <div class="loading">Carregando...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && licenses.length > 0) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Software</th>
+            <th>Fornecedor</th>
+            <th>Chave</th>
+            <th>Assentos</th>
+            <th>Expiração</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (license of licenses; track license.id) {
+            <tr>
+              <td>{{ license.softwareName }}</td>
+              <td>{{ license.vendor || '-' }}</td>
+              <td>{{ license.licenseKey }}</td>
+              <td>{{ license.usedSeats || 0 }} / {{ license.totalSeats || 0 }}</td>
+              <td>{{ license.expirationDate }}</td>
+              <td>
+                <span class="status" [class]="license.status.toLowerCase()">
+                  {{ license.status }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/licenses', license.id, 'edit']" class="btn-edit">Editar</a>
+                <button class="btn-delete" (click)="deleteLicense(license.id)">Excluir</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!loading && licenses.length === 0) {
+    <div class="empty">Nenhuma licença cadastrada</div>
+  }
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 0">Anterior</button>
+      <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Próxima</button>
+    </div>
+  }
+
+</div>

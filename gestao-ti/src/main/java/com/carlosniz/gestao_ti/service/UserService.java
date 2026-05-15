@@ -2,6 +2,7 @@ package com.carlosniz.gestao_ti.service;
 
 import com.carlosniz.gestao_ti.dto.UserRequestDTO;
 import com.carlosniz.gestao_ti.dto.UserResponseDTO;
+import com.carlosniz.gestao_ti.dto.UserSimpleDTO;
 import com.carlosniz.gestao_ti.dto.UserUpdateDTO;
 import com.carlosniz.gestao_ti.entity.Role;
 import com.carlosniz.gestao_ti.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -44,6 +46,16 @@ public class UserService {
     public Page<UserResponseDTO> findAll(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(this::toResponse);
+    }
+
+    public List<UserSimpleDTO> findAllSimple() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> UserSimpleDTO.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .build())
+                .toList();
     }
 
     public UserResponseDTO findById(UUID id) {

@@ -1,127 +1,149 @@
+@use '../../../styles/tokens' as *;
+
 .container {
-  padding: 2rem;
-  max-width: 1200px;
+  padding: $space-xl;
+  max-width: 1280px;
   margin: 0 auto;
+
+  @include mobile { padding: $space-md; }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: $space-xl;
 
-    h1 {
-      color: #1a1a2e;
-      font-size: 1.8rem;
+    @include mobile {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $space-md;
     }
 
-    .actions {
-      display: flex;
-      gap: 1rem;
+    h1 {
+      color: $gray-900;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
 
-      .btn-primary {
-        background: #4361ee;
-        color: white;
-        border: none;
-        padding: 0.6rem 1.2rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-xs;
+      padding: $space-sm $space-md;
+      background: $primary;
+      color: white;
+      border: none;
+      border-radius: $radius-sm;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: $transition;
 
-        &:hover { background: #3451d1; }
-      }
+      &:hover { background: $primary-dark; }
 
-      .btn-logout {
-        background: transparent;
-        color: #e63946;
-        border: 1px solid #e63946;
-        padding: 0.6rem 1.2rem;
-        border-radius: 6px;
-        cursor: pointer;
-
-        &:hover { background: #e63946; color: white; }
-      }
+      @include mobile { justify-content: center; }
     }
   }
 
   .loading, .empty {
     text-align: center;
-    padding: 2rem;
-    color: #888;
+    padding: $space-2xl;
+    color: $gray-500;
+    background: white;
+    border-radius: $radius-md;
+    border: 1px solid $gray-200;
   }
 
   .error {
-    background: #fee;
-    color: #e63946;
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
+    background: $danger-light;
+    color: $danger;
+    padding: $space-md;
+    border-radius: $radius-sm;
+    margin-bottom: $space-md;
+    font-size: 0.9rem;
   }
 
   .table-container {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: $radius-md;
+    border: 1px solid $gray-200;
     overflow: hidden;
+
+    @include mobile { overflow-x: auto; }
 
     table {
       width: 100%;
       border-collapse: collapse;
 
+      @include mobile { min-width: 700px; }
+
       thead {
-        background: #f8f9fa;
+        background: $gray-50;
+        border-bottom: 1px solid $gray-200;
 
         th {
-          padding: 1rem;
+          padding: $space-sm $space-md;
           text-align: left;
           font-weight: 600;
-          color: #555;
-          font-size: 0.9rem;
+          color: $gray-600;
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
       }
 
       tbody {
         tr {
-          border-top: 1px solid #eee;
+          border-bottom: 1px solid $gray-100;
+          transition: $transition;
 
-          &:hover { background: #f8f9fa; }
+          &:last-child { border-bottom: none; }
+          &:hover { background: $gray-50; }
 
           td {
-            padding: 1rem;
-            color: #333;
+            padding: $space-md;
+            color: $gray-700;
+            font-size: 0.9rem;
 
             .status {
-              padding: 0.25rem 0.75rem;
-              border-radius: 12px;
-              font-size: 0.8rem;
+              display: inline-block;
+              padding: 0.25rem 0.625rem;
+              border-radius: $radius-full;
+              font-size: 0.75rem;
               font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 0.025em;
 
-              &.ativo { background: #d4edda; color: #155724; }
-              &.inativo { background: #f8d7da; color: #721c24; }
-              &.em_manutencao { background: #fff3cd; color: #856404; }
-              &.descartado { background: #e2e3e5; color: #383d41; }
+              &.ativo { background: $success-light; color: $success; }
+              &.inativo { background: $gray-100; color: $gray-600; }
+              &.em_manutencao { background: $warning-light; color: $warning; }
+              &.descartado { background: $danger-light; color: $danger; }
             }
 
             .btn-edit, .btn-delete {
               border: none;
-              padding: 0.4rem 0.8rem;
-              border-radius: 4px;
+              padding: 0.375rem 0.75rem;
+              border-radius: $radius-sm;
               cursor: pointer;
-              font-size: 0.85rem;
-              margin-right: 0.5rem;
+              font-size: 0.8rem;
+              font-weight: 600;
+              margin-right: $space-xs;
+              transition: $transition;
             }
 
             .btn-edit {
-              background: #ffc107;
-              color: #333;
+              background: $primary-light;
+              color: $primary;
 
-              &:hover { background: #e0a800; }
+              &:hover { background: $primary; color: white; }
             }
 
             .btn-delete {
-              background: #e63946;
-              color: white;
+              background: $danger-light;
+              color: $danger;
 
-              &:hover { background: #c82333; }
+              &:hover { background: $danger; color: white; }
             }
           }
         }
@@ -133,24 +155,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: $space-md;
+    margin-top: $space-xl;
 
     button {
-      padding: 0.5rem 1rem;
+      padding: $space-xs $space-md;
       background: white;
-      border: 1px solid #ddd;
-      border-radius: 6px;
+      border: 1px solid $gray-200;
+      border-radius: $radius-sm;
       cursor: pointer;
+      font-weight: 500;
+      transition: $transition;
 
       &:hover:not(:disabled) {
-        background: #f0f0f0;
+        background: $gray-50;
+        border-color: $gray-300;
       }
 
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
+      &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    span {
+      color: $gray-600;
+      font-size: 0.9rem;
     }
   }
 }

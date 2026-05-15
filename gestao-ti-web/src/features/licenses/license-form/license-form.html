@@ -1,0 +1,66 @@
+<div class="container">
+
+  <header class="header">
+    <h1>{{ isEditMode ? 'Editar Licença' : 'Nova Licença' }}</h1>
+    <a routerLink="/licenses" class="btn-back">← Voltar</a>
+  </header>
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+
+    <div class="form-group">
+      <label for="softwareName">Nome do Software *</label>
+      <input id="softwareName" type="text" formControlName="softwareName" />
+    </div>
+
+    <div class="form-group">
+      <label for="licenseKey">Chave da Licença *</label>
+      <input id="licenseKey" type="text" formControlName="licenseKey" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="vendor">Fornecedor</label>
+        <input id="vendor" type="text" formControlName="vendor" />
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select id="status" formControlName="status">
+          @for (status of statusOptions; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="totalSeats">Total de Assentos</label>
+        <input id="totalSeats" type="number" formControlName="totalSeats" />
+      </div>
+
+      <div class="form-group">
+        <label for="usedSeats">Assentos em Uso</label>
+        <input id="usedSeats" type="number" formControlName="usedSeats" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="expirationDate">Data de Expiração *</label>
+      <input id="expirationDate" type="date" formControlName="expirationDate" />
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/licenses" class="btn-cancel">Cancelar</a>
+      <button type="submit" class="btn-primary" [disabled]="loading || form.invalid">
+        {{ loading ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,133 @@
+@use '../../../styles/tokens' as *;
+
+.container {
+  padding: $space-xl;
+  max-width: 720px;
+  margin: 0 auto;
+
+  @include mobile { padding: $space-md; }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $space-xl;
+
+    h1 {
+      color: $gray-900;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .btn-back {
+      color: $primary;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: $space-xs $space-sm;
+      border-radius: $radius-sm;
+      transition: $transition;
+
+      &:hover { background: $primary-light; }
+    }
+  }
+
+  .error {
+    background: $danger-light;
+    color: $danger;
+    padding: $space-md;
+    border-radius: $radius-sm;
+    margin-bottom: $space-md;
+    font-size: 0.9rem;
+  }
+
+  .form-card {
+    background: white;
+    padding: $space-xl;
+    border-radius: $radius-md;
+    border: 1px solid $gray-200;
+
+    @include mobile { padding: $space-md; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $space-md;
+
+      @include mobile { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: $space-md;
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: $space-xs;
+        color: $gray-700;
+      }
+
+      input, select {
+        padding: $space-sm;
+        border: 1px solid $gray-300;
+        border-radius: $radius-sm;
+        font-size: 0.9rem;
+        background: white;
+        color: $gray-800;
+        transition: $transition;
+
+        &:focus {
+          outline: none;
+          border-color: $primary;
+          box-shadow: 0 0 0 3px $primary-light;
+        }
+
+        &::placeholder { color: $gray-400; }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: $space-sm;
+      margin-top: $space-lg;
+      padding-top: $space-lg;
+      border-top: 1px solid $gray-200;
+
+      @include mobile {
+        flex-direction: column-reverse;
+      }
+
+      .btn-cancel, .btn-primary {
+        padding: $space-sm $space-lg;
+        border-radius: $radius-sm;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+
+        @include mobile { width: 100%; text-align: center; }
+      }
+
+      .btn-cancel {
+        background: white;
+        color: $gray-700;
+        border: 1px solid $gray-300;
+
+        &:hover { background: $gray-50; }
+      }
+
+      .btn-primary {
+        background: $primary;
+        color: white;
+        border: none;
+
+        &:hover:not(:disabled) { background: $primary-dark; }
+
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+      }
+    }
+  }
+}

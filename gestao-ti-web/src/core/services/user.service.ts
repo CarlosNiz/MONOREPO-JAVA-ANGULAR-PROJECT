@@ -26,11 +26,11 @@ export class UserService {
         return this.http.get<{ id: string, username: string }[]>(`${this.apiUrl}/list`);
     }
 
-    findById(id: number): Observable<User> {
+    findById(id: string): Observable<User> {
         return this.http.get<User>(`${this.apiUrl}/${id}`);
     }
     
-    update(id: number, user: UserRequest): Observable<User> {
+    update(id: string, user: UserRequest): Observable<User> {
         return this.http.put<User>(`${this.apiUrl}/${id}`, user);
     }
 
@@ -39,6 +39,6 @@ export class UserService {
     }
 
     promote(id: string): Observable<User> {
-        return this.http.post<User>(`${this.apiUrl}/${id}/promote`, {});
+        return this.http.patch<User>(`${this.apiUrl}/${id}/promote`, {});
     }
 }

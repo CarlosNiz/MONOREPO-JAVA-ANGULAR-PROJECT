@@ -1,15 +1,16 @@
 <div class="layout">
 
-  <div class="mobile-header">
-    <h2>Gestão TI</h2>
-    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
-  </div>
+  <button class="menu-toggle-floating" (click)="toggleMenu()" [class.hidden]="menuOpen">
+    ☰
+  </button>
 
   <div class="overlay" [class.active]="menuOpen" (click)="closeMenu()"></div>
 
   <aside class="sidebar" [class.open]="menuOpen">
-    <div class="logo">
+
+    <div class="sidebar-header">
       <h2>Gestão TI</h2>
+      <button class="btn-close" (click)="closeMenu()">✕</button>
     </div>
 
     <nav class="menu">
@@ -18,12 +19,12 @@
       </a>
 
       @if (isAdmin) {
-      <a routerLink="/licenses" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
-        <span class="icon">🔑</span> Licenças
-      </a>
-      <a routerLink="/users" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
-        <span class="icon">👥</span> Usuários
-      </a>
+        <a routerLink="/licenses" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
+          <span class="icon">🔑</span> Licenças
+        </a>
+        <a routerLink="/users" routerLinkActive="active" class="menu-item" (click)="closeMenu()">
+          <span class="icon">👥</span> Usuários
+        </a>
       }
     </nav>
 
